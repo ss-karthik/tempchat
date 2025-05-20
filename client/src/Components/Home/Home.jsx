@@ -93,6 +93,17 @@ const Home = () => {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   };
+
+  const handleKeyDown = (e)=>{
+    
+    if(e.key==='Enter'){
+      if(joined){
+        sendMsg();
+      } else {
+        join();
+      }
+    }
+  }
   
   return (
     <>
@@ -125,7 +136,7 @@ const Home = () => {
 
 
           <div className='fixed bottom-0 flex justify-center items-center py-5 gap-5 w-full bg-amber-300'>
-            <input type='text' className='border border-black text-2xl' value={msg} onChange={(e)=>{
+            <input type='text' className='border border-black text-2xl' value={msg} onKeyDown={handleKeyDown} onChange={(e)=>{
               setMsg(e.target.value);
             }}/>
             <Send className='cursor-pointer text-2xl' onClick={sendMsg}/>
@@ -141,11 +152,11 @@ const Home = () => {
               setRoom(e.target.value);
             }}/>
             <RefreshCcwDot className='cursor-pointer' onClick={genRoom} />
-            <Clipboard className='pointer-cursor' onClick={copyRoom} />
+            <Clipboard className='cursor-pointer' onClick={copyRoom} />
           </div>
           <div className='flex gap-5 items-center w-full'>
             <h2>Name: </h2>
-            <input className='border border-black p-1' type='text' value={userName} onChange={(e)=>{
+            <input className='border border-black p-1' type='text' onKeyDown={handleKeyDown} value={userName} onChange={(e)=>{
               setUserName(e.target.value);
             }}/>
           </div>
