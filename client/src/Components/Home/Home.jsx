@@ -71,10 +71,11 @@ const Home = () => {
     setSoc(socket);
   }
 
-  const leave = ()=>{
+  const leave = async ()=>{
     soc.disconnect();
     setSoc(null);
     setJoined(false);
+    setConvo([]);
   }
 
   const scrollToEnd = ()=>{
