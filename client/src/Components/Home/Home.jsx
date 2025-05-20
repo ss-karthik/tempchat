@@ -2,9 +2,10 @@ import {useState, useEffect, useRef} from 'react'
 import {io} from "socket.io-client"
 import {ServerURL} from "../../constants"
 import {RefreshCcwDot, Clipboard, Send, LogOut, HardDriveDownload} from "lucide-react"
+import {useNavigate} from "react-router-dom"
 
 const Home = () => {
-
+  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [room, setRoom] = useState('');
   const [joined, setJoined] = useState(false);
@@ -76,6 +77,7 @@ const Home = () => {
     setSoc(null);
     setJoined(false);
     setConvo([]);
+    navigate("/");
   }
 
   const scrollToEnd = ()=>{
