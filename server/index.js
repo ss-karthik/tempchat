@@ -34,12 +34,13 @@ io.on("connection", (socket)=>{
     socket.on("disconnect", ()=>{
         const { room, userName } = socket.handshake.query;
         console.log(`user ${userName} with ID ${socket.id} has disconnected from room ${room}`);
-        if (userData[room]) { 
+        if (userData[room]) {
+            if (userData[room].length === 0) {
+                delete userData[room];
+            } 
             userData[room] = userData[room].filter(user => user !== userName);
         }
-        if (userData[room].length === 0) {
-            delete userData[room];
-        }
+        
 
         io.to(room).emit("user disconnected", userName, userData[room]||[]);
     });
