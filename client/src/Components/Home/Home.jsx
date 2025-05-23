@@ -13,6 +13,7 @@ const Home = () => {
   const [msg, setMsg] = useState('');
   const [users, setUsers] = useState([]);
   const [convo, setConvo] = useState([]);
+  const [loading, setLoading] = useState(true);
   const convoEndRef = useRef(null);
 
   useEffect(()=>{
@@ -29,6 +30,8 @@ const Home = () => {
         const cobj = {
           room:room, userName: "TempBot", message: `User ${uname} has connected!`
         }
+        if(loading)
+          setLoading(false);
         setConvo(convo=>[...convo, cobj])
       })
       soc.on("user disconnected", (uname, udata)=>{
@@ -111,6 +114,7 @@ const Home = () => {
   return (
     <>
       {joined ? (
+        !loading ? (
         <div className='flex flex-col items-center gap-10 min-h-screen p-2 bg-lime-300'>
           <div className='flex gap-5 p-2 w-full justify-center items-center fixed top-0 bg-amber-300'>
             <div className='bg-sky-300 p-2 rounded-lg max-w-120'>
@@ -144,7 +148,10 @@ const Home = () => {
             }}/>
             <Send className='cursor-pointer text-2xl' onClick={sendMsg}/>
           </div>
-        </div>      
+        </div>
+      ) : (
+        <div className='h-full bg-lime-300'>loading</div>
+      )      
       ) : (
         <div className='flex flex-col justify-center items-center gap-10 min-h-screen bg-lime-300'>
         <h1 className='text-5xl text-center'>TempChat</h1>
